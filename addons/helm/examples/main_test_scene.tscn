@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://drtkp6e2kdbw2"]
+
+[ext_resource type="Texture2D" uid="uid://dppikq4bictua" path="res://addons/helm/examples/icon.svg" id="1_6ng2s"]
+[ext_resource type="Script" path="res://addons/helm/examples/main_test_scene.gd" id="1_y1fre"]
+
+[node name="MainTestScene" type="Node2D"]
+script = ExtResource("1_y1fre")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(587, 183)
+texture = ExtResource("1_6ng2s")

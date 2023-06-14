@@ -1,2 +1,3 @@
-# helm
-A simple runtime evaluator and debugger for Godot 4
+# Helm
+A simple runtime evaluator and debugger for Godot 4.
+
