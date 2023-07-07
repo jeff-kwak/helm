@@ -14,6 +14,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Autocomplete and expression suggestions
 - Expression monitors
 
+## [0.0.2] - 2023-07-07
+
+### Added
+
+### Fixed
+
+### Changed
+
+- Upgraded to Godot 4.1
+- Showing or Hiding the Console Controlled Completely by Host
+
+### Removed
+
 ## [0.0.1] - 2023-06-13
 
 ### Added

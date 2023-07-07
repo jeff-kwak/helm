@@ -52,10 +52,6 @@ func show_helm():
     helm_shown.emit()
 
 
-func _on_command_input_text_changed(new_text:String):
-    print("helm: text changed %s" % new_text)
-
-
 func _on_command_input_text_submitted(command:String):
     _eval_command(command)
 
