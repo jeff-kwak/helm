@@ -2,6 +2,10 @@ class_name HelmCanvas
 extends CanvasLayer
 
 
+signal helm_shown()
+signal helm_hidden()
+
+
 const HELM_TOGGLE_ACTION_NAME = "ui_toggle_helm"
 
 
@@ -16,12 +20,7 @@ var _already_shown = false
 
 func _ready():
     register("help", Help.new(result_output, _registered_descriptions), "Display help and registered objects")
-    _hide_helm()
-
-
-func _input(event):
-    if event.is_action_pressed(HELM_TOGGLE_ACTION_NAME):
-        _show_helm() if !visible else _hide_helm() # toggles visibility
+    hide_helm()
 
 
 func register(registered_name: String, target, description: String = ""):
@@ -33,16 +32,15 @@ func register(registered_name: String, target, description: String = ""):
     _registered_descriptions[registered_name] = description
 
 
-func _on_command_input_text_submitted(command:String):
-    _eval_command(command)
 
 
-func _hide_helm():
+func hide_helm():
     visible = false
     command_input.focus_mode = Control.FOCUS_NONE
+    helm_hidden.emit()
 
 
-func _show_helm():
+func show_helm():
     visible = true
     if not _already_shown:
         _already_shown = true
@@ -51,6 +49,15 @@ func _show_helm():
     command_input.focus_mode = Control.FOCUS_ALL
     command_input.clear()
     command_input.grab_focus()
+    helm_shown.emit()
+
+
+func _on_command_input_text_changed(new_text:String):
+    print("helm: text changed %s" % new_text)
+
+
+func _on_command_input_text_submitted(command:String):
+    _eval_command(command)
 
 
 func _eval_command(command: String):
@@ -80,6 +87,10 @@ func _append_error(command: String, expression: Expression) -> void:
     result_output.append_text("[color=red][b]< ERROR '{command}'[/b][/color]\n".format({"command": command}))
     result_output.append_text("[color=red]{result}[/color]".format({"result": expression.get_error_text()}))
     result_output.append_text("\n")
+
+
+
+
 
 
 class Help:

@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://c2xpi1l54g2l1" path="res://addons/helm/fonts/CourierPrime-BoldItalic.ttf" id="5_lcpk0"]
 
 [node name="HelmCanvas" type="CanvasLayer"]
+process_mode = 3
 layer = 128
 script = ExtResource("1_ho3hc")
 
@@ -48,4 +49,5 @@ theme_override_fonts/font = ExtResource("2_47ie5")
 clear_button_enabled = true
 caret_blink = true
 
+[connection signal="text_changed" from="Panel/VBoxContainer/CommandInput" to="." method="_on_command_input_text_changed"]
 [connection signal="text_submitted" from="Panel/VBoxContainer/CommandInput" to="." method="_on_command_input_text_submitted"]

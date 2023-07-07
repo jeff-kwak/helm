@@ -1,11 +1,76 @@
-[gd_scene load_steps=3 format=3 uid="uid://drtkp6e2kdbw2"]
+[gd_scene load_steps=7 format=3 uid="uid://drtkp6e2kdbw2"]
 
 [ext_resource type="Texture2D" uid="uid://dppikq4bictua" path="res://addons/helm/examples/icon.svg" id="1_6ng2s"]
 [ext_resource type="Script" path="res://addons/helm/examples/main_test_scene.gd" id="1_y1fre"]
 
+[sub_resource type="Curve2D" id="Curve2D_5v1ge"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 114, 100, 0, 0, 0, 0, 23, 242, 0, 0, 0, 0, -190, 21, 0, 0, 0, 0, -18, -104, 0, 0, 0, 0, 112, 99)
+}
+point_count = 5
+
+[sub_resource type="Animation" id="Animation_q737p"]
+resource_name = "move"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_vdlts"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dfcgp"]
+_data = {
+"RESET": SubResource("Animation_vdlts"),
+"move": SubResource("Animation_q737p")
+}
+
 [node name="MainTestScene" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_y1fre")
 
-[node name="Icon" type="Sprite2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Path2D" type="Path2D" parent="Node2D"]
 position = Vector2(587, 183)
+curve = SubResource("Curve2D_5v1ge")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Node2D/Path2D"]
+position = Vector2(112, 99)
+rotation = 1.0012
+progress = 929.275
+cubic_interp = false
+
+[node name="Icon" type="Sprite2D" parent="Node2D/Path2D/PathFollow2D"]
+rotation = -2.81195
 texture = ExtResource("1_6ng2s")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D"]
+root_node = NodePath("../Path2D/PathFollow2D/Icon")
+autoplay = "move"
+libraries = {
+"": SubResource("AnimationLibrary_dfcgp")
+}
